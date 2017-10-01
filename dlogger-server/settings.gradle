@@ -1,1 +1,1 @@
-include ':dlogger-web'
+include ':dlogger-rest'
