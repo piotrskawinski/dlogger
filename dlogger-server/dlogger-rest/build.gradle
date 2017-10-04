@@ -17,7 +17,7 @@ apply plugin: 'io.spring.dependency-management'
 
 
 jar {
-	baseName = 'dlogger-web'
+    baseName = 'dlogger-web'
 }
 
 repositories {
@@ -27,14 +27,13 @@ repositories {
     maven { url 'http://repo.spring.io/milestone/' }
 }
 
-dependencies {	
-	compile("org.springframework.boot:spring-boot-starter-data-jpa")
-	compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	compile 'org.postgresql:postgresql:9.4.1208'
-	
-	compile 'org.elasticsearch:elasticsearch:5.4.1'
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.postgresql:postgresql:9.4.1208'
+    compile 'org.elasticsearch:elasticsearch:5.4.1'
     compile 'org.elasticsearch.client:transport:5.4.1'
-	
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
+    
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
