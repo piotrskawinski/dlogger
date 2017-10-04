@@ -13,17 +13,36 @@ public class DLogEntry {
 
     public DLogEntry() {}
 
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-	public String getLevel() { return level; }
-	public void setLevel(String level) { this.level = level; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Date getTimestamp() { return timestamp; }
-	public void setTimestamp(Date timestamp) { this.timestamp = timestamp; }
+    public String getLevel() {
+        return level;
+    }
 
-	public String getMessage() { return message; }
-	public void setMessage(String message) { this.message = message; }
-    
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
-

@@ -22,12 +22,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("com.dlogger")
 @SpringBootApplication
 public class DLogBootApplication {
-	
-	@SuppressWarnings("resource")
-	@Bean
+
+    @SuppressWarnings("resource")
+    @Bean
     public Client client() throws Exception {
-		return new PreBuiltTransportClient(Settings.EMPTY)				
-			.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));		
+        return new PreBuiltTransportClient(Settings.EMPTY)
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
     }
 
     @Bean
@@ -35,8 +35,8 @@ public class DLogBootApplication {
         return new ElasticsearchTemplate(client());
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(DLogBootApplication.class, args);
-	}
-	
+    public static void main(String[] args) {
+        SpringApplication.run(DLogBootApplication.class, args);
+    }
+
 }

@@ -12,15 +12,16 @@ import com.dlogger.repository.elasticsearch.DLogElasticsearchRepository;
 import com.dlogger.repository.elasticsearch.DLogEntry;
 
 @Service
-public class DLogElasticsearchService {	
-	private static Logger logger = LoggerFactory.getLogger(DLogElasticsearchService.class);
-	
-	@Autowired private DLogElasticsearchRepository repository;
-		
-	public List<DLogEntry> getPaged(int page, int size) {
-		List<DLogEntry> entries = repository.findAll(PageRequest.of(page, size)).getContent();
-		logger.debug("Retrieved " + entries.size() + " log entries for [page: " + page + ", size: " + size + "]");
-		return entries;
-	}
-			
+public class DLogElasticsearchService {
+    private static Logger logger = LoggerFactory.getLogger(DLogElasticsearchService.class);
+
+    @Autowired
+    private DLogElasticsearchRepository repository;
+
+    public List<DLogEntry> getPaged(int page, int size) {
+        List<DLogEntry> entries = repository.findAll(PageRequest.of(page, size)).getContent();
+        logger.debug("Retrieved " + entries.size() + " log entries for [page: " + page + ", size: " + size + "]");
+        return entries;
+    }
+
 }

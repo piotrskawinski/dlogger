@@ -1,4 +1,4 @@
- package com.dlogger.rest;
+package com.dlogger.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,22 +14,23 @@ import com.dlogger.service.DLogConfigurationService;
 
 @RestController
 @RequestMapping("/dlogger/conf/")
-public class DLogConfigurationRestController {	
+public class DLogConfigurationRestController {
 
-	private static Logger logger = LoggerFactory.getLogger(DLogConfigurationRestController.class);
-	
-	@Autowired private DLogConfigurationService service;
-	
-	@RequestMapping(method = RequestMethod.GET, name="conf")
-	ResponseEntity<?> getConfiguration() {		
-		logger.info("Getting configuratio...");
-		return new ResponseEntity<>(service.getConfiguration(), HttpStatus.OK);
-	}
-	
-	@RequestMapping(method = RequestMethod.PUT)
-	ResponseEntity<?> save(@RequestBody DLogConfigurationCommand command) {
-		service.saveTimeToLive(command.getTimeToLive());
+    private static Logger logger = LoggerFactory.getLogger(DLogConfigurationRestController.class);
+
+    @Autowired
+    private DLogConfigurationService service;
+
+    @RequestMapping(method = RequestMethod.GET, name = "conf")
+    ResponseEntity<?> getConfiguration() {
+        logger.info("Getting configuratio...");
+        return new ResponseEntity<>(service.getConfiguration(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    ResponseEntity<?> save(@RequestBody DLogConfigurationCommand command) {
+        service.saveTimeToLive(command.getTimeToLive());
         return new ResponseEntity<>("Successfully saved", HttpStatus.OK);
-	}
-	
+    }
+
 }

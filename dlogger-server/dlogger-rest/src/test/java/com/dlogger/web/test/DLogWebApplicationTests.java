@@ -6,9 +6,9 @@ import org.junit.Test;
 // @SpringBootTest
 public class DLogWebApplicationTests {
 
-	@Test
-	public void contextLoads() {
-		// TODO
-	}
+    @Test
+    public void contextLoads() {
+        // TODO
+    }
 
 }

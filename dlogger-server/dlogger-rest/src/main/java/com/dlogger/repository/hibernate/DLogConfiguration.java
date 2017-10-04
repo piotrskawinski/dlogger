@@ -9,21 +9,25 @@ import javax.persistence.Id;
 public class DLogConfiguration {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer timeToLive;
 
-	public Long getId() { return id; }
-	
-	public Integer getTimeToLive() { return timeToLive; }
-	public void setTimeToLive(Integer timeToLive) { this.timeToLive = timeToLive; }
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public String toString() {
-		return "DLogConfiguration [id=" + id + ", timeToLive=" + timeToLive + "]";
-	}
-	
-	
-    
+    public Integer getTimeToLive() {
+        return timeToLive;
+    }
+
+    public void setTimeToLive(Integer timeToLive) {
+        this.timeToLive = timeToLive;
+    }
+
+    @Override
+    public String toString() {
+        return "DLogConfiguration [id=" + id + ", timeToLive=" + timeToLive + "]";
+    }
+
 }
-

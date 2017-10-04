@@ -27,8 +27,7 @@ repositories {
     maven { url 'http://repo.spring.io/milestone/' }
 }
 
-dependencies {		
-	
+dependencies {	
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
 	compile 'org.springframework.boot:spring-boot-starter-web'
