@@ -21,7 +21,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.dlogger")
 @ComponentScan("com.dlogger")
 @SpringBootApplication
-public class DLogBootApplication {
+public class DLogRestBootApplication {
 
     @SuppressWarnings("resource")
     @Bean
@@ -36,7 +36,7 @@ public class DLogBootApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(DLogBootApplication.class, args);
+        SpringApplication.run(DLogRestBootApplication.class, args);
     }
 
 }

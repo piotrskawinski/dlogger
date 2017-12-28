@@ -3,6 +3,7 @@ package com.dlogger.sample.test;
 import java.net.InetAddress;
 
 import org.apache.log4j.Logger;
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -14,16 +15,26 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.dlogger.agent.PropertyReader;
+
 public class DLogSampleAppenderTest {
 
     private Logger logger = Logger.getLogger(getClass());
+
+    private static PropertyReader propertyReader;
     private static TransportClient client;
 
     @SuppressWarnings("resource")
     @BeforeClass
     public static void prepare() throws Exception {
-        client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+        propertyReader = new PropertyReader();
+
+        client = new PreBuiltTransportClient(Settings.EMPTY).addTransportAddress(new InetSocketTransportAddress(
+                InetAddress.getByName(propertyReader.getHostname()), propertyReader.getPort()));
+
+        deleteOldDocuments();
+
+        Thread.sleep(2 * 1000);
     }
 
     @AfterClass
@@ -41,13 +52,13 @@ public class DLogSampleAppenderTest {
         Assert.assertEquals(0, response.getHits().getHits().length);
 
         // when
-        logger.info(message);
-        logger.info(message);
-        logger.info(message);
-        logger.info(message);
-        logger.info(message);
+        logger.error(message);
+        logger.error(message);
+        logger.error(message);
+        logger.error(message);
+        logger.error(message);
 
-        Thread.sleep(5 * 1000);
+        Thread.sleep(2 * 1000);
 
         // then
         response = query(message);
@@ -55,11 +66,32 @@ public class DLogSampleAppenderTest {
     }
 
     private String createMessage() {
-        return String.valueOf(System.currentTimeMillis());
+        return "Simple message for test";
     }
 
     private SearchResponse query(String message) {
-        return client.prepareSearch("dlog").setTypes("internal").setQuery(QueryBuilders.termQuery("message", message))
-            .get();
+        return client.prepareSearch("dlog").setTypes(propertyReader.getIndexType())
+                .setQuery(QueryBuilders.matchQuery("message", message)).get();
+    }
+
+    private static void deleteOldDocuments() {
+        SearchResponse response = client.prepareSearch("dlog")
+                .setTypes(propertyReader.getIndexType())
+                .setSize(1000)
+                .get();
+
+        response.getHits().forEach(hit -> {
+            try {
+                client.prepareDelete("dlog", propertyReader.getIndexType(), hit.getId()).get();
+                logStdout("Deleted index with id: " + hit.getId());
+
+            } catch (ElasticsearchException e) {
+                logStdout("Failed deleting index: " + e.getMessage());
+            }
+        });
+    }
+
+    private static void logStdout(String message) {
+        System.out.println(message);
     }
 }

@@ -14,19 +14,25 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 public class DLogAppender extends AppenderSkeleton {
-
+	
+    private static final String INDEX_NAME = "dlog";
     private TransportClient client;
+    private PropertyReader propertyReader;
 
     @SuppressWarnings("resource")
     public DLogAppender() throws Exception {
-        client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+    	propertyReader = new PropertyReader();
+    	String hostname = propertyReader.getHostname();
+    	int port = propertyReader.getPort();        
+    	client = new PreBuiltTransportClient(Settings.EMPTY)
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostname), port));
     }
 
     @Override
     public void append(LoggingEvent event) {
         try {
-            IndexResponse response = client.prepareIndex("dlog", "internal")
+        	String indexType = propertyReader.getIndexType();
+            IndexResponse response = client.prepareIndex(INDEX_NAME, indexType)
                 .setSource(XContentFactory.jsonBuilder().startObject().field("message", event.getMessage())
                 .field("level", event.getLevel().toString())
                 .field("timestamp", new Date(event.getTimeStamp())).endObject())
@@ -50,7 +56,7 @@ public class DLogAppender extends AppenderSkeleton {
     public boolean requiresLayout() {
         return false;
     }
-
+    
     private static void log(String message) {
         System.out.println(message);
     }
